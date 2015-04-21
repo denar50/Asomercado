@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="listTemplate.xhtml">
+
+            <ui:define name="top">
+                top
+            </ui:define>
+
+            <ui:define name="content">
+                <f:view>
+                    <h:form>
+                        <h1><h:outputText value="Create/Edit"/></h1>
+                        <h:panelGrid columns="2">
+                            <h:outputLabel value="Description:" for="description" />
+                            <h:inputText id="description" value="#{ListView.currentShoppingList.description}" title="Description" required="true" requiredMessage="The Description field is required."/>
+                        </h:panelGrid>
+                        <h:form>
+                            <h1><h:outputText value="List"/></h1>
+                            <h:dataTable value="#{ListView.currentShoppingListItems}" var="item">
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Amount"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.amount}"/>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Description"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.description}"/>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="UnitFk"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.unitFk.description}"/>
+                                </h:column>
+                            </h:dataTable>
+
+
+                            <h:form>
+                                <h1><h:outputText value="Create/Edit"/></h1>
+                                <h:panelGrid columns="2">
+                                    <h:outputLabel value="Description:" for="description" />
+                                    <h:inputText id="description" value="#{ListView.newListItem.description}" title="Description" required="true" requiredMessage="The Description field is required."/>
+                                    <h:outputLabel value="Amount:" for="amount" />
+                                    <h:inputText id="amount" value="#{ListView.newListItem.amount}" title="Amount" required="true" requiredMessage="The Amount field is required."/>
+                                    <h:outputLabel value="UnitFk:" for="unitFk" />
+                                    <h:selectOneMenu id="unitFk" value="#{ListView.newListItem.unitFk}" title="UnitFk" required="true" requiredMessage="The UnitFk field is required.">
+                                        <!-- TODO: update below reference to list of available items-->
+                                        <f:selectItems value="#{fixme}"/>
+                                    </h:selectOneMenu>
+                                    <h:outputLabel value="ListFk:" for="listFk" />
+                                    <h:selectOneMenu id="listFk" value="#{ListView.newListItem.listFk}" title="ListFk" required="true" requiredMessage="The ListFk field is required.">
+                                        <!-- TODO: update below reference to list of available items-->
+                                        <f:selectItems value="#{fixme}"/>
+                                    </h:selectOneMenu>
+                                </h:panelGrid>
+                            </h:form>
+
+                        </h:form>
+
+                    </h:form>
+                </f:view>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
