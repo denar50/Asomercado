@@ -39,7 +39,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "ShoppingList.findByName", query = "SELECT l FROM ShoppingList l WHERE l.name = :name"),
     @NamedQuery(name = "ShoppingList.findByUpdatedAt", query = "SELECT l FROM ShoppingList l WHERE l.updatedAt = :updatedAt"),
     @NamedQuery(name = "ShoppingList.findByCreatedAt", query = "SELECT l FROM ShoppingList l WHERE l.createdAt = :createdAt")})
-public class ShoppingList implements Serializable {
+public class ShoppingList extends BaseModel {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

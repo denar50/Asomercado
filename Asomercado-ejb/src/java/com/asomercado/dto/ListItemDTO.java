@@ -11,7 +11,7 @@ import com.asomercado.model.ListItem;
  *
  * @author Edgar
  */
-public class ListItemDTO{
+public class ListItemDTO extends BaseDTO{
     private Integer pk;
     private String description;
     private float amount;

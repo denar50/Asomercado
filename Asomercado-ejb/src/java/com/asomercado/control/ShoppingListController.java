@@ -9,8 +9,6 @@ import com.asomercado.dao.ShoppingListDAO;
 import com.asomercado.dao.ListItemDAO;
 import com.asomercado.dao.MeasurementUnitDAO;
 import com.asomercado.dto.MeasurementUnitDTO;
-import com.asomercado.model.MeasurementUnit;
-import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -32,7 +30,7 @@ public class ShoppingListController {
     
     public List<MeasurementUnitDTO> getMeasurementUnits()
     {
-        return MeasurementUnitDTO.getDTOFromEntityList(measurementUnitDAO.findAll());        
+        return MeasurementUnitDTO.getDTOListFromEntityList(measurementUnitDAO.findAll());        
     }
 
 }

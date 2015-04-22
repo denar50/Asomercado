@@ -35,7 +35,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "MeasurementUnit.findAll", query = "SELECT u FROM MeasurementUnit u"),
     @NamedQuery(name = "MeasurementUnit.findByPk", query = "SELECT u FROM MeasurementUnit u WHERE u.pk = :pk"),
     @NamedQuery(name = "MeasurementUnit.findByDescription", query = "SELECT u FROM MeasurementUnit u WHERE u.description = :description")})
-public class MeasurementUnit implements Serializable {
+public class MeasurementUnit extends BaseModel {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

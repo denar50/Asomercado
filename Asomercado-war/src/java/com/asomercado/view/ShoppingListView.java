@@ -6,11 +6,12 @@
 package com.asomercado.view;
 
 import com.asomercado.control.ShoppingListController;
+import com.asomercado.dto.ListItemDTO;
 import com.asomercado.dto.MeasurementUnitDTO;
+import com.asomercado.dto.ShoppingListDTO;
 import com.asomercado.model.ListItem;
-import com.asomercado.model.ShoppingList;
 import com.asomercado.util.Routes;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -26,7 +27,8 @@ public class ShoppingListView {
     @EJB
     private ShoppingListController shoppingListController;
     
-    private ShoppingList currentShoppingList;
+    private ShoppingListDTO currentShoppingList;
+    private List<ListItemDTO> currentListItems;
 
     /**
      * Creates a new instance of NewJSFManagedBean
@@ -36,22 +38,22 @@ public class ShoppingListView {
     
     public String goCreateNewList()
     {
-        currentShoppingList = new ShoppingList();
-        currentShoppingList.setListItemList(new LinkedList<ListItem>());
+        currentShoppingList = new ShoppingListDTO();
+        currentListItems = new ArrayList<>();
         return Routes.CREATE_EDIT_LIST;
     }
 
-    public ShoppingList getCurrentShoppingList() {
+    public ShoppingListDTO getCurrentShoppingList() {
         return currentShoppingList;
     }
 
-    public void setCurrentShoppingList(ShoppingList currentShoppingList) {
+    public void setCurrentShoppingList(ShoppingListDTO currentShoppingList) {
         this.currentShoppingList = currentShoppingList;
     }
     
-    public List<ListItem> getCurrentShoppingListItems()
+    public List<ListItemDTO> getCurrentShoppingListItems()
     {
-        return currentShoppingList.getListItemList();
+        return currentListItems;
     }
     
     public ListItem getNewListItem()

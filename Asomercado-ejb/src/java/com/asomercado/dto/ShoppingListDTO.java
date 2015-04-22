@@ -11,7 +11,7 @@ import com.asomercado.model.ShoppingList;
  *
  * @author Edgar
  */
-public class ShoppingListDTO {
+public class ShoppingListDTO extends BaseDTO{
     private Integer pk;
     private String name;
     public ShoppingListDTO()

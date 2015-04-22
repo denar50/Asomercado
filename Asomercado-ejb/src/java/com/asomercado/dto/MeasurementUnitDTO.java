@@ -13,13 +13,12 @@ import java.util.List;
  *
  * @author Edgar
  */
-public class MeasurementUnitDTO {
+public class MeasurementUnitDTO extends BaseDTO{
     private Integer pk;
     private String description;
     
     public MeasurementUnitDTO()
     {
-        
     }
     
     public MeasurementUnitDTO(MeasurementUnit measurementUnit)
@@ -44,7 +43,7 @@ public class MeasurementUnitDTO {
         this.description = description;
     }
     
-    public static List<MeasurementUnitDTO> getDTOFromEntityList(List<MeasurementUnit> measurementUnits)
+    public static List<MeasurementUnitDTO> getDTOListFromEntityList(List<MeasurementUnit> measurementUnits)
     {
         List<MeasurementUnitDTO> measurementUnitsDTOList = new ArrayList<MeasurementUnitDTO>();
         for(MeasurementUnit measurementUnit : measurementUnits)
