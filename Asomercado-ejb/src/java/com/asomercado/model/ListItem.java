@@ -34,7 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ListItem.findByPk", query = "SELECT l FROM ListItem l WHERE l.pk = :pk"),
     @NamedQuery(name = "ListItem.findByAmount", query = "SELECT l FROM ListItem l WHERE l.amount = :amount"),
     @NamedQuery(name = "ListItem.findByDescription", query = "SELECT l FROM ListItem l WHERE l.description = :description")})
-public class ListItem implements Serializable {
+public class ListItem implements Serializable{
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,10 +52,10 @@ public class ListItem implements Serializable {
     private String description;
     @JoinColumn(name = "unit_fk", referencedColumnName = "pk")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private MeasurementUnit unitFk;
+    private MeasurementUnit measurementUnit;
     @JoinColumn(name = "list_fk", referencedColumnName = "pk")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private ShoppingList listFk;
+    private ShoppingList shoppingList;
 
     public ListItem() {
     }
@@ -94,20 +94,20 @@ public class ListItem implements Serializable {
         this.description = description;
     }
 
-    public MeasurementUnit getUnitFk() {
-        return unitFk;
+    public MeasurementUnit getMeasurementUnit() {
+        return measurementUnit;
     }
 
-    public void setUnitFk(MeasurementUnit unitFk) {
-        this.unitFk = unitFk;
+    public void setMeasurementUnit(MeasurementUnit measurementUnit) {
+        this.measurementUnit = measurementUnit;
     }
 
-    public ShoppingList getListFk() {
-        return listFk;
+    public ShoppingList getShoppingList() {
+        return shoppingList;
     }
 
-    public void setListFk(ShoppingList listFk) {
-        this.listFk = listFk;
+    public void setShoppingList(ShoppingList shoppingList) {
+        this.shoppingList = shoppingList;
     }
 
     @Override

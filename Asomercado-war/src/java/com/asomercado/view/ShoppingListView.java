@@ -5,9 +5,9 @@
  */
 package com.asomercado.view;
 
-import com.asomercado.control.ListController;
+import com.asomercado.control.ShoppingListController;
+import com.asomercado.dto.MeasurementUnitDTO;
 import com.asomercado.model.ListItem;
-import com.asomercado.model.MeasurementUnit;
 import com.asomercado.model.ShoppingList;
 import com.asomercado.util.Routes;
 import java.util.LinkedList;
@@ -20,24 +20,24 @@ import javax.faces.bean.RequestScoped;
  *
  * @author USUARIO1
  */
-@ManagedBean(name = "ListView")
+@ManagedBean(name = "ShoppingListView")
 @RequestScoped
-public class ListView {
+public class ShoppingListView {
     @EJB
-    private ListController listController;
+    private ShoppingListController shoppingListController;
     
     private ShoppingList currentShoppingList;
 
     /**
      * Creates a new instance of NewJSFManagedBean
      */
-    public ListView() {
+    public ShoppingListView() {
     }
     
     public String goCreateNewList()
     {
         currentShoppingList = new ShoppingList();
-        currentShoppingList.setListItemList(new LinkedList<>());
+        currentShoppingList.setListItemList(new LinkedList<ListItem>());
         return Routes.CREATE_EDIT_LIST;
     }
 
@@ -59,9 +59,9 @@ public class ListView {
         return new ListItem();
     }
     
-    public List<MeasurementUnit> getMeasurementUnits()
+    public List<MeasurementUnitDTO> getMeasurementUnits()
     {
-        return null;
+        return shoppingListController.getMeasurementUnits();
     }
     
 }

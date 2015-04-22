@@ -5,7 +5,7 @@
  */
 package com.asomercado.dao;
 
-import com.asomercado.model.MeasurementUnit;
+import com.asomercado.model.ShoppingList;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author USUARIO1
  */
 @Stateless
-public class UnitDAO extends AbstractFacade<MeasurementUnit> {
+public class ShoppingListDAO extends AbstractFacade<ShoppingList> {
     @PersistenceContext(unitName = "Asomercado-ejbPU")
     private EntityManager em;
 
@@ -24,8 +24,8 @@ public class UnitDAO extends AbstractFacade<MeasurementUnit> {
         return em;
     }
 
-    public UnitDAO() {
-        super(MeasurementUnit.class);
+    public ShoppingListDAO() {
+        super(ShoppingList.class);
     }
     
 }

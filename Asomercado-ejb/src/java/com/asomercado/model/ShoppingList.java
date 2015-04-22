@@ -36,7 +36,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "ShoppingList.findAll", query = "SELECT l FROM ShoppingList l"),
     @NamedQuery(name = "ShoppingList.findByPk", query = "SELECT l FROM ShoppingList l WHERE l.pk = :pk"),
-    @NamedQuery(name = "ShoppingList.findByDescription", query = "SELECT l FROM ShoppingList l WHERE l.description = :description"),
+    @NamedQuery(name = "ShoppingList.findByName", query = "SELECT l FROM ShoppingList l WHERE l.name = :name"),
     @NamedQuery(name = "ShoppingList.findByUpdatedAt", query = "SELECT l FROM ShoppingList l WHERE l.updatedAt = :updatedAt"),
     @NamedQuery(name = "ShoppingList.findByCreatedAt", query = "SELECT l FROM ShoppingList l WHERE l.createdAt = :createdAt")})
 public class ShoppingList implements Serializable {
@@ -49,8 +49,8 @@ public class ShoppingList implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
-    @Column(name = "description")
-    private String description;
+    @Column(name = "name")
+    private String name;
     @Basic(optional = false)
     @NotNull
     @Column(name = "updated_at")
@@ -61,7 +61,7 @@ public class ShoppingList implements Serializable {
     @Column(name = "created_at")
     @Temporal(TemporalType.DATE)
     private Date createdAt;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "listFk", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "shoppingList", fetch = FetchType.LAZY)
     private java.util.List<ListItem> listItemList;
 
     public ShoppingList() {
@@ -71,9 +71,9 @@ public class ShoppingList implements Serializable {
         this.pk = pk;
     }
 
-    public ShoppingList(Integer pk, String description, Date updatedAt, Date createdAt) {
+    public ShoppingList(Integer pk, String name, Date updatedAt, Date createdAt) {
         this.pk = pk;
-        this.description = description;
+        this.name = name;
         this.updatedAt = updatedAt;
         this.createdAt = createdAt;
     }
@@ -86,12 +86,12 @@ public class ShoppingList implements Serializable {
         this.pk = pk;
     }
 
-    public String getDescription() {
-        return description;
+    public String getName() {
+        return name;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Date getUpdatedAt() {

@@ -47,7 +47,7 @@ public class MeasurementUnit implements Serializable {
     @Size(min = 1, max = 255)
     @Column(name = "description")
     private String description;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "unitFk", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "unit", fetch = FetchType.LAZY)
     private List<ListItem> listItemList;
 
     public MeasurementUnit() {
