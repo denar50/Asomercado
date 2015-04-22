@@ -12,7 +12,6 @@ import com.asomercado.model.ShoppingList;
  * @author Edgar
  */
 public class ShoppingListDTO extends BaseDTO{
-    private Integer pk;
     private String name;
     public ShoppingListDTO()
     {
@@ -23,14 +22,6 @@ public class ShoppingListDTO extends BaseDTO{
     {
         this.pk = shoppingList.getPk();
         this.name = shoppingList.getName();
-    }
-
-    public Integer getPk() {
-        return pk;
-    }
-
-    public void setPk(Integer pk) {
-        this.pk = pk;
     }
 
     public String getName() {

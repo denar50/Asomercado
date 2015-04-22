@@ -21,52 +21,57 @@
                             <h:outputLabel value="#{msg['list.create.edit.list.name.label']}" for="name" />
                             <h:inputText id="name" value="#{ShoppingListView.currentShoppingList.name}" title="#{msg['list.create.edit.list.name.label']}" required="false"/>
                         </h:panelGrid>
-                        <h:form>
+                        <h:panelGroup>
                             <h1><h:outputText value="#{msg['list.create.edit.list.item.heading.label']}"/></h1>
-                            <h:dataTable value="#{ShoppingListView.currentShoppingListItems}" var="item">
+                            <h:dataTable id="itemListTable" value="#{ShoppingListView.currentListItems}" var="item">
                                 
                                 <h:column>
                                     <f:facet name="header">
-                                        <h:outputText value="Description"/>
+                                        <h:outputText value="#{msg['list.create.edit.list.item.description.label']}"/>
                                     </f:facet>
                                     <h:outputText value="#{item.description}"/>
                                 </h:column>
                                 
                                 <h:column>
                                     <f:facet name="header">
-                                        <h:outputText value="Amount"/>
+                                        <h:outputText value="#{msg['list.create.edit.list.item.amount.label']}"/>
                                     </f:facet>
-                                    <h:outputText value="#{item.amount}"/>
+                                    <h:outputText value="#{ShoppingListView.getFormattedAmount(item)}"/>
                                 </h:column>
                                 
                                 <h:column>
                                     <f:facet name="header">
-                                        <h:outputText value="UnitFk"/>
+                                        <h:outputText value=""/>
+                                        <h:commandButton immediate="true" value="#{msg['list.create.edit.list.item.edit.btn']}" action="#{ShoppingListView.editItem(item.pk)}" rendered="#{not empty ShoppingListView.currentShoppingListItems}">
+                                            <f:ajax event="action" render="itemListTable" />
+                                        </h:commandButton>
                                     </f:facet>
-                                    <h:outputText value="#{item.unitFk.description}"/>
                                 </h:column>
                             </h:dataTable>
-
-
-                            <h:form>
-                                <h1><h:outputText value="Create/Edit"/></h1>
-                                <h:panelGrid columns="2">
-                                    <h:outputLabel value="Description:" for="description" />
-                                    <h:inputText id="description" value="#{ShoppingListView.newListItem.description}" title="Description" required="true" requiredMessage="The Description field is required."/>
-                                    <h:outputLabel value="Amount:" for="amount" />
-                                    <h:inputText id="amount" value="#{ShoppingListView.newListItem.amount}" title="Amount" required="true" requiredMessage="The Amount field is required."/>
-                                    <h:outputLabel value="Unidad" for="unitFk" />
-                                    <h:selectOneMenu id="unitFk" value="#{ShoppingListView.newListItem.unitFk}" title="Unidad" required="true" requiredMessage="The UnitFk field is required.">
-                                        <!-- TODO: update below reference to list of available items-->
-                                        <f:selectItems value="#{ShoppingListView.measurementUnits}" var="unit" itemLabel="#{unit.description}" itemValue="#{unit.pk}"/>
-                                    </h:selectOneMenu>
-                                    
-                                </h:panelGrid>
-                            </h:form>
-
-                        </h:form>
-
+                        </h:panelGroup>
                     </h:form>
+                    <h:form>
+                            <h1><h:outputText value="#{msg['list.create.edit.list.item.form.label']}"/></h1>
+                            <h:panelGrid id="addListItemForm" columns="2">
+                                <h:outputLabel value="#{msg['list.create.edit.list.item.description.label']}" for="description" />
+                                <h:inputText id="description" value="#{ShoppingListView.currentListItem.description}" title="Description" required="true" requiredMessage="The Description field is required." />
+                                <h:outputLabel value="Amount:" for="amount" />
+                                <h:inputText id="amount" value="#{ShoppingListView.currentListItem.amount}" title="Amount" required="true" requiredMessage="The Amount field is required.">
+                                    <!-- display in at least 2 decimal points -->
+                                    <f:convertNumber type="number" pattern="#,###.##" maxFractionDigits="2" />
+                                </h:inputText>
+                                <h:outputLabel value="Unidad" for="unitFk" />
+                                <h:selectOneMenu id="unitFk" value="#{ShoppingListView.currentListItem.measurementUnitPk}" title="Unidad" required="true" requiredMessage="The UnitFk field is required.">
+                                    <!-- TODO: update below reference to list of available items-->
+                                    <f:selectItems value="#{ShoppingListView.measurementUnitsList}" var="unit" itemLabel="#{unit.description}" itemValue="#{unit.pk}">
+                                    </f:selectItems>
+                                    <f:converter converterId="integerObjectConverter"/>
+                                </h:selectOneMenu>
+
+                            </h:panelGrid>
+                            <h:commandButton value="#{msg['list.create.edit.list.item.add.btn']}" actionListener="#{ShoppingListView.addNewListItem}" />
+                            <h:commandButton immediate="true" value="#{msg['list.create.edit.list.item.form.reset.btn']}" actionListener="#{ShoppingListView.resetAddItemForm}"/>
+                        </h:form>
                 </f:view>
 
             </ui:define>

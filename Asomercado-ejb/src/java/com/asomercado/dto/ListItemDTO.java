@@ -12,10 +12,9 @@ import com.asomercado.model.ListItem;
  * @author Edgar
  */
 public class ListItemDTO extends BaseDTO{
-    private Integer pk;
     private String description;
     private float amount;
-    private MeasurementUnitDTO measurementUnit;
+    private Integer measurementUnitPk;
     private Integer shoppingListPk;
     
     public ListItemDTO()
@@ -28,16 +27,8 @@ public class ListItemDTO extends BaseDTO{
         this.pk = listItem.getPk();
         this.description = listItem.getDescription();
         this.amount = listItem.getAmount();
-        this.measurementUnit = new MeasurementUnitDTO(listItem.getMeasurementUnit());
+        this.measurementUnitPk = listItem.getMeasurementUnit().getPk();
         this.shoppingListPk = listItem.getShoppingList().getPk();
-    }
-
-    public Integer getPk() {
-        return pk;
-    }
-
-    public void setPk(Integer pk) {
-        this.pk = pk;
     }
 
     public String getDescription() {
@@ -50,6 +41,18 @@ public class ListItemDTO extends BaseDTO{
 
     public float getAmount() {
         return amount;
+    }
+    
+    @Override
+    public ListItemDTO clone()
+    {
+        ListItemDTO newObject = new ListItemDTO();
+        newObject.setAmount(amount);
+        newObject.setDescription(description);
+        newObject.setMeasurementUnitPk(measurementUnitPk);
+        newObject.setShoppingListPk(shoppingListPk);
+        newObject.setPk(pk);
+        return newObject;
     }
 
     public void setAmount(float amount) {
@@ -64,16 +67,12 @@ public class ListItemDTO extends BaseDTO{
         this.shoppingListPk = shoppingListPk;
     }
 
-    public MeasurementUnitDTO getMeasurementUnit() {
-        return measurementUnit;
+    public Integer getMeasurementUnitPk() {
+        return measurementUnitPk;
     }
 
-    public void setMeasurementUnit(MeasurementUnitDTO measurementUnit) {
-        this.measurementUnit = measurementUnit;
+    public void setMeasurementUnitPk(Integer measurementUnitPk) {
+        this.measurementUnitPk = measurementUnitPk;
     }
     
-    public String getFormattedAmount()
-    {
-        return amount + " " + measurementUnit.getDescription();
-    }
 }

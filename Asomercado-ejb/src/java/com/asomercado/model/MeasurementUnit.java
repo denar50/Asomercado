@@ -47,7 +47,7 @@ public class MeasurementUnit extends BaseModel {
     @Size(min = 1, max = 255)
     @Column(name = "description")
     private String description;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "unit", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "measurementUnit", fetch = FetchType.LAZY)
     private List<ListItem> listItemList;
 
     public MeasurementUnit() {
@@ -109,7 +109,7 @@ public class MeasurementUnit extends BaseModel {
 
     @Override
     public String toString() {
-        return "com.asomercado.model.Unit[ pk=" + pk + " ]";
+        return "com.asomercado.model.MeasurementUnit[ pk=" + pk + " ]";
     }
     
 }

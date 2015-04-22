@@ -7,14 +7,15 @@ package com.asomercado.dto;
 
 import com.asomercado.model.MeasurementUnit;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
  * @author Edgar
  */
 public class MeasurementUnitDTO extends BaseDTO{
-    private Integer pk;
     private String description;
     
     public MeasurementUnitDTO()
@@ -27,14 +28,6 @@ public class MeasurementUnitDTO extends BaseDTO{
         this.description = measurementUnit.getDescription();
     }
 
-    public Integer getPk() {
-        return pk;
-    }
-
-    public void setPk(Integer pk) {
-        this.pk = pk;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -43,12 +36,12 @@ public class MeasurementUnitDTO extends BaseDTO{
         this.description = description;
     }
     
-    public static List<MeasurementUnitDTO> getDTOListFromEntityList(List<MeasurementUnit> measurementUnits)
+    public static Map<Integer, MeasurementUnitDTO> getDTOMapFromDTOList(List<MeasurementUnitDTO> measurementUnits)
     {
-        List<MeasurementUnitDTO> measurementUnitsDTOList = new ArrayList<MeasurementUnitDTO>();
-        for(MeasurementUnit measurementUnit : measurementUnits)
+        Map<Integer, MeasurementUnitDTO> measurementUnitsDTOList = new HashMap<>();
+        for(MeasurementUnitDTO dto : measurementUnits)
         {
-            measurementUnitsDTOList.add(new MeasurementUnitDTO(measurementUnit));
+            measurementUnitsDTOList.put(dto.getPk(), dto);
         }
         
         return measurementUnitsDTOList;
