@@ -38,9 +38,15 @@ h2#main-subtitle
 {
     border-bottom: 1px solid rgba(0,0,0,.2);
 }
+.list-item-container{
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(0,0,0,.2);
+    margin-bottom: 10px;
+}
 .list-item-container table
 {
     width: 100%;
+    border-collapse: collapse;
 }
 .list-item-container table th
 {
@@ -48,7 +54,13 @@ h2#main-subtitle
 }
 .item-row
 {
-    height: 3rem;
+    height: 2.3rem;
+    box-sizing: border-box;
+}
+
+tr[class="item-row"]:nth-child(even)
+{
+    background-color: rgba(0,0,0,.1);
 }
 label
 {
@@ -82,5 +94,11 @@ div[class="add-edit-field"]:nth-child(2)
 div[class="add-edit-field"]:nth-child(3)
 {
     width: 19%;
+}
+
+div[class="add-edit-field"]:nth-child(4)
+{
+    display: block;
+    margin-top: 20px;
 }
 

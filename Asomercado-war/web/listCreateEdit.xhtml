@@ -59,7 +59,7 @@
                                             <f:facet name="header">
                                                 <h:outputText value=""/>
                                             </f:facet>
-                                            <h:commandButton value="#{msg['list.create.edit.list.item.edit.btn']}" action="#{ShoppingListView.editItem(item)}" >
+                                            <h:commandButton class="button action" value="#{msg['list.create.edit.list.item.edit.btn']}" action="#{ShoppingListView.editItem(item)}" >
                                             </h:commandButton>
 
                                         </h:column>
@@ -68,7 +68,7 @@
                                             <f:facet name="header">
                                                 <h:outputText value=""/>
                                             </f:facet>
-                                            <h:commandButton value="#{msg['list.create.edit.list.item.delete.btn']}" action="#{ShoppingListView.deleteItem(item)}" >
+                                            <h:commandButton class="button warning" value="#{msg['list.create.edit.list.item.delete.btn']}" action="#{ShoppingListView.deleteItem(item)}" >
                                             </h:commandButton>
 
                                         </h:column>
@@ -112,6 +112,7 @@
                                         <h:commandButton class="button warning" immediate="true" value="#{msg['list.create.edit.list.item.form.reset.btn']}" type="reset">
                                             <f:ajax listener="#{ShoppingListView.resetAddItemForm}" event="action" render="@all" />
                                         </h:commandButton>
+                                        <!--Return button -->
                                         <h:commandButton class="button action" immediate="true" value="#{msg['list.create.edit.list.item.form.return.btn']}" action="#{ShoppingListView.goToShoppingLists}"/>
                                     </h:panelGroup>
                                 </h:panelGroup>
