@@ -11,6 +11,7 @@ import com.asomercado.dao.MeasurementUnitDAO;
 import com.asomercado.dto.ListItemDTO;
 import com.asomercado.dto.MeasurementUnitDTO;
 import com.asomercado.dto.ShoppingListDTO;
+import com.asomercado.model.ListItem;
 import com.asomercado.model.MeasurementUnit;
 import com.asomercado.model.ShoppingList;
 import com.asomercado.util.Util;
@@ -57,20 +58,12 @@ public class ShoppingListController {
         return measurementUnits;
     }
     
-    public void saveShoppingList(ShoppingListDTO shoppingListDTO, List<ListItemDTO> listItemList) throws Exception
+    public void saveListItem(ShoppingListDTO shoppingListDTO, ListItemDTO listItem) throws Exception
     {
         ShoppingList shoppingList = shoppingListDAO.saveShoppingList(shoppingListDTO);
-        List<ListItemDTO> modifiedListItems = new ArrayList<>();
-        for(ListItemDTO listItem : listItemList)
-        {
-            if(listItem.isModified())
-            {
-                listItem.setShoppingListPk(shoppingList.getPk());
-                modifiedListItems.add(listItem);
-            }
-        }
-        Map<Integer, MeasurementUnit> measurementUnits = measurementUnitDAO.getMeasurementUnitsForListItemsDto(listItemList);
-        listItemDAO.saveListItems(modifiedListItems, shoppingList,measurementUnits);
+        listItem.setShoppingListPk(shoppingList.getPk());
+        MeasurementUnit measurementUnit = measurementUnitDAO.find(listItem.getMeasurementUnitPk());
+        listItemDAO.saveListItem(listItem, shoppingList,measurementUnit);
     }
     
     public void deleteListItem(ListItemDTO listItem) throws Exception
@@ -78,5 +71,27 @@ public class ShoppingListController {
         listItemDAO.deleteListItem(listItem);
     }
     
+    
+    public List<ShoppingListDTO> getShoppingLists()
+    {
+        List<ShoppingListDTO> dtoList = new ArrayList<ShoppingListDTO>();
+        for(ShoppingList entity : shoppingListDAO.findAll())
+        {
+            ShoppingListDTO dto = new ShoppingListDTO(entity);
+            dtoList.add(dto);
+        }
+        return dtoList;
+    }
+    
+    public List<ListItemDTO> getShoppingListItems(Integer shoppingListPk)
+    {
+        List<ListItem> entities = shoppingListDAO.find(shoppingListPk).getListItemList();
+        List<ListItemDTO> dtos = new ArrayList<>();
+        for(ListItem entity : entities)
+        {
+            dtos.add(new ListItemDTO(entity));
+        }
+        return dtos;
+    }
 
 }

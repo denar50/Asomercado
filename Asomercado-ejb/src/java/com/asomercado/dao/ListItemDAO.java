@@ -35,38 +35,35 @@ public class ListItemDAO extends AbstractFacade<ListItem> {
         super(ListItem.class);
     }
     
-    public void saveListItems(List<ListItemDTO> dtos, ShoppingList shoppingList,Map<Integer, MeasurementUnit> measurementUnits) throws Exception
+    public void saveListItem(ListItemDTO dto, ShoppingList shoppingList,MeasurementUnit measurementUnit) throws Exception
     {
-        for(ListItemDTO dto : dtos)
+        ListItem entity;
+        boolean isUpdate = false;
+        if(dto.getPk() == null)
         {
-            ListItem entity;
-            boolean isUpdate = false;
-            if(dto.getPk() == null)
-            {
-                entity = new ListItem();
-            }
-            else
-            {
-                entity = find(dto.getPk());
-                isUpdate = true;
-            }
-            entity.setAmount(dto.getAmount());
-            entity.setDescription(dto.getDescription());
-            entity.setMeasurementUnit(measurementUnits.get(dto.getMeasurementUnitPk()));
-            entity.setShoppingList(shoppingList);
-            if(isUpdate)
-            {
-                edit(entity);
-            }
-            else
-            {
-                create(entity);
-            }
-            
-            getEntityManager().flush();
-            dto.setPk(entity.getPk());
-            dto.setModified(false);
+            entity = new ListItem();
         }
+        else
+        {
+            entity = find(dto.getPk());
+            isUpdate = true;
+        }
+        entity.setAmount(dto.getAmount());
+        entity.setDescription(dto.getDescription());
+        entity.setMeasurementUnit(measurementUnit);
+        entity.setShoppingList(shoppingList);
+        if(isUpdate)
+        {
+            edit(entity);
+        }
+        else
+        {
+            create(entity);
+        }
+
+        getEntityManager().flush();
+        dto.setPk(entity.getPk());
+        dto.setModified(false);
     }
     
     public void deleteListItem(ListItemDTO dto) throws Exception

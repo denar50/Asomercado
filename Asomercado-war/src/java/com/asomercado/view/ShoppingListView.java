@@ -52,6 +52,13 @@ public class ShoppingListView extends BaseView{
         currentListItems = new ArrayList<>();
         return Routes.CREATE_EDIT_LIST;
     }
+    
+    public String goEditShoppingList(ShoppingListDTO shoppingListDTO)
+    {
+        currentShoppingList = shoppingListDTO;
+        currentListItems = shoppingListController.getShoppingListItems(currentShoppingList.getPk());
+        return Routes.CREATE_EDIT_LIST;
+    }
 
     public ShoppingListDTO getCurrentShoppingList() {
         return currentShoppingList;
@@ -79,35 +86,33 @@ public class ShoppingListView extends BaseView{
         this.currentListItem = currentListItem;
     }
     
-    public void editItem()
+    public void editItem(ListItemDTO listItem)
     {
-        Integer itemPk = Util.stringToInt(getRequestParameter("pk"));
-        ListItemDTO listItem = getListItemFromCurrentListItemList(itemPk);
         currentListItems.remove(listItem);
         currentListItem = listItem;
         currentListItemBeforeEdit = listItem.clone();
+        isCurrentListItemInEditMode = true;
     }
-    public void deleteItem()
+    public void deleteItem(ListItemDTO item)
     {
-        Integer itemPk = Util.stringToInt(getRequestParameter("pk"));
-        ListItemDTO listItem = getListItemFromCurrentListItemList(itemPk);
         try
         {
-            shoppingListController.deleteListItem(listItem);
-            currentListItems.remove(listItem);
+            shoppingListController.deleteListItem(item);
+            currentListItems.remove(item);
         }catch(Exception e)
         {
             e.printStackTrace();
         }
         
     }
-    public void addNewListItem()
+    public void addListItem()
     {
         currentListItem.setModified(true);
         currentListItems.add(currentListItem);
         try
         {
-            shoppingListController.saveShoppingList(currentShoppingList, currentListItems);
+            shoppingListController.saveListItem(currentShoppingList, currentListItem);
+            isCurrentListItemInEditMode = false;
             resetAddItemForm();
         }
         catch(Exception e)
@@ -183,6 +188,9 @@ public class ShoppingListView extends BaseView{
         return searchResult;
     }
     
-    
+    public List<ShoppingListDTO> getShoppingLists()
+    {
+        return shoppingListController.getShoppingLists();
+    }
     
 }

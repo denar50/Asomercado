@@ -42,21 +42,19 @@
                                 <h:column>
                                     <f:facet name="header">
                                         <h:outputText value=""/>
-                                        <h:commandButton immediate="true" value="#{msg['list.create.edit.list.item.edit.btn']}" action="#{ShoppingListView.editItem}" >
-                                            <f:param name="pk" value="#{item.pk}"/>
-                                            <f:ajax event="action" render="itemListTable" />
-                                        </h:commandButton>
                                     </f:facet>
+                                    <h:commandButton immediate="true" value="#{msg['list.create.edit.list.item.edit.btn']}" actionListener="#{ShoppingListView.editItem(item)}" >
+                                    </h:commandButton>
+                                    
                                 </h:column>
                                 
                                 <h:column>
                                     <f:facet name="header">
                                         <h:outputText value=""/>
-                                        <h:commandButton immediate="true" value="#{msg['list.create.edit.list.item.delete.btn']}" action="#{ShoppingListView.deleteItem}" >
-                                            <f:param name="pk" value="#{item.pk}"/>
-                                            <f:ajax event="action" render="itemListTable" />
-                                        </h:commandButton>
                                     </f:facet>
+                                    <h:commandButton immediate="true" value="#{msg['list.create.edit.list.item.delete.btn']}" actionListener="#{ShoppingListView.deleteItem(item)}" >
+                                    </h:commandButton>
+                                    
                                 </h:column>
                             </h:dataTable>
                         </h:panelGroup>
@@ -80,7 +78,7 @@
                                 </h:selectOneMenu>
 
                             </h:panelGrid>
-                            <h:commandButton value="#{msg['list.create.edit.list.item.add.btn']}" actionListener="#{ShoppingListView.addNewListItem}" />
+                            <h:commandButton value="#{msg['list.create.edit.list.item.add.btn']}" actionListener="#{ShoppingListView.addListItem}" />
                             <h:commandButton immediate="true" value="#{msg['list.create.edit.list.item.form.reset.btn']}" actionListener="#{ShoppingListView.resetAddItemForm}"/>
                         </h:form>
                 </f:view>
