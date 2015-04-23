@@ -17,7 +17,7 @@
             <ui:define name="content">
                 <f:view>
                     <main>
-                        <h1><h:outputText value="#{msg['list.create.edit.list.heading.label']}"/></h1>
+                        <h2 id="list-edit-page-subtitle"><h:outputText value="#{msg['list.create.edit.list.heading.label']}"/></h2>
                         <!-- This form contains all the list properties. So far there's only "name" -->
                         <h:form>
                             <div id="shopping-list-data">
@@ -39,8 +39,7 @@
                                 </h:panelGroup>
                                 <!-- The list items -->
                                 <h:panelGroup class="list-item-container" layout="block" rendered="#{not empty ShoppingListView.currentListItems}">
-                                    <h1><h:outputText value="#{msg['list.create.edit.list.item.heading.label']}"/></h1>
-                                    <h:dataTable id="itemListTable" value="#{ShoppingListView.currentListItems}" var="item">
+                                    <h:dataTable rowClasses="item-row" id="itemListTable" value="#{ShoppingListView.currentListItems}" var="item">
                                         <!--Item description -->
                                         <h:column>
                                             <f:facet name="header">
@@ -81,40 +80,39 @@
                         <!--This is the form to add/edit a list item-->
                         <h:form>
                             <div id="add-edit-form-container">
-                                <h1><h:outputText value="#{msg['list.create.edit.list.item.form.label']}"/></h1>
+                                <h3><h:outputText value="#{msg['list.create.edit.list.item.form.label']}"/></h3>
                                 <!--Fields -->
-                                <h:panelGroup layout="block">
+                                <h:panelGroup id="add-edit-form" layout="block">
                                     <!--Description field-->
-                                    <h:panelGroup layout="block">
+                                    <h:panelGroup class="add-edit-field" layout="block">
                                         <h:outputLabel value="#{msg['list.create.edit.list.item.description.label']}" for="description" />
                                         <h:inputText id="description" value="#{ShoppingListView.currentListItem.description}" title="Description" required="true" requiredMessage="The Description field is required." />
                                     </h:panelGroup>
                                     <!--Amount field -->
-                                    <h:panelGroup layout="block">
+                                    <h:panelGroup class="add-edit-field" layout="block">
                                         <h:outputLabel value="#{msg['list.create.edit.list.item.amount.label']}" for="amount" />
                                         <h:inputText id="amount" value="#{ShoppingListView.currentListItem.amount}" title="Amount" required="true" requiredMessage="The Amount field is required.">
                                             <f:converter converterId="javax.faces.Float"/>
                                             <f:validator validatorId="amountValidator" />
                                         </h:inputText>
-                                    </h:panelGroup>   
+                                    </h:panelGroup>
                                     <!--Measurement unit for the amount there is always one by default as this is mandatory-->
-                                    <h:panelGroup layout="block">
+                                    <h:panelGroup class="add-edit-field" layout="block">
                                         <h:selectOneMenu id="unitFk" value="#{ShoppingListView.currentListItem.measurementUnitPk}" title="Unidad" required="true" requiredMessage="The UnitFk field is required.">
-                                            <!-- TODO: update below reference to list of available items-->
                                             <f:selectItems value="#{ShoppingListView.measurementUnitsList}" var="unit" itemLabel="#{unit.description}" itemValue="#{unit.pk}">
                                             </f:selectItems>
                                             <f:converter converterId="integerObjectConverter"/>
                                         </h:selectOneMenu>
                                     </h:panelGroup>
                                     <!--Actions -->
-                                    <h:panelGroup>
+                                    <h:panelGroup class="add-edit-field" layout="block">
                                         <!-- Add button -->
-                                        <h:commandButton value="#{msg['list.create.edit.list.item.add.btn']}" action="#{ShoppingListView.addListItem}" />
+                                        <h:commandButton class="button action" value="#{msg['list.create.edit.list.item.add.btn']}" action="#{ShoppingListView.addListItem}" />
                                         <!-- Reset button -->
-                                        <h:commandButton immediate="true" value="#{msg['list.create.edit.list.item.form.reset.btn']}" type="reset">
+                                        <h:commandButton class="button warning" immediate="true" value="#{msg['list.create.edit.list.item.form.reset.btn']}" type="reset">
                                             <f:ajax listener="#{ShoppingListView.resetAddItemForm}" event="action" render="@all" />
                                         </h:commandButton>
-                                        <h:commandButton immediate="true" value="#{msg['list.create.edit.list.item.form.return.btn']}" action="#{ShoppingListView.goToShoppingLists}"/>
+                                        <h:commandButton class="button action" immediate="true" value="#{msg['list.create.edit.list.item.form.return.btn']}" action="#{ShoppingListView.goToShoppingLists}"/>
                                     </h:panelGroup>
                                 </h:panelGroup>
                             </div>
