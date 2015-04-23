@@ -87,19 +87,36 @@ public class ShoppingListView extends BaseView{
         currentListItem = listItem;
         currentListItemBeforeEdit = listItem.clone();
     }
-    
+    public void deleteItem()
+    {
+        Integer itemPk = Util.stringToInt(getRequestParameter("pk"));
+        ListItemDTO listItem = getListItemFromCurrentListItemList(itemPk);
+        try
+        {
+            shoppingListController.deleteListItem(listItem);
+            currentListItems.remove(listItem);
+        }catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        
+    }
     public void addNewListItem()
     {
+        currentListItem.setModified(true);
+        currentListItems.add(currentListItem);
         try
         {
             shoppingListController.saveShoppingList(currentShoppingList, currentListItems);
+            resetAddItemForm();
         }
         catch(Exception e)
         {
             e.printStackTrace();
+            currentListItems.remove(currentListItem);
         }
-        currentListItems.add(currentListItem);
-        resetAddItemForm();
+        
+        
     }
     
     public void resetAddItemForm()

@@ -43,7 +43,17 @@
                                     <f:facet name="header">
                                         <h:outputText value=""/>
                                         <h:commandButton immediate="true" value="#{msg['list.create.edit.list.item.edit.btn']}" action="#{ShoppingListView.editItem}" >
-                                            <f:param name="pk" value="hola"/>
+                                            <f:param name="pk" value="#{item.pk}"/>
+                                            <f:ajax event="action" render="itemListTable" />
+                                        </h:commandButton>
+                                    </f:facet>
+                                </h:column>
+                                
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value=""/>
+                                        <h:commandButton immediate="true" value="#{msg['list.create.edit.list.item.delete.btn']}" action="#{ShoppingListView.deleteItem}" >
+                                            <f:param name="pk" value="#{item.pk}"/>
                                             <f:ajax event="action" render="itemListTable" />
                                         </h:commandButton>
                                     </f:facet>

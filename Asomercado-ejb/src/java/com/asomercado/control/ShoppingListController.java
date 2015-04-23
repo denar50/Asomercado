@@ -73,6 +73,10 @@ public class ShoppingListController {
         listItemDAO.saveListItems(modifiedListItems, shoppingList,measurementUnits);
     }
     
+    public void deleteListItem(ListItemDTO listItem) throws Exception
+    {
+        listItemDAO.deleteListItem(listItem);
+    }
     
 
 }

@@ -31,30 +31,47 @@ public class ShoppingListDAO extends AbstractFacade<ShoppingList> {
     public ShoppingListDAO() {
         super(ShoppingList.class);
     }
-    
+
     public ShoppingList saveShoppingList(ShoppingListDTO shoppingListDTO) throws Exception
     {
-            ShoppingList shoppingList = new ShoppingList();
-            Date timeNow = Calendar.getInstance().getTime();
+        ShoppingList shoppingList;
+        Date timeNow = Calendar.getInstance().getTime();
+        if(shoppingListDTO.getPk() == null)
+        {
+            shoppingList = new ShoppingList();
             shoppingList.setCreatedAt(timeNow);
             shoppingList.setUpdatedAt(timeNow);
+            shoppingList.setName("--");
             create(shoppingList);
-            if(Util.isEmptyString(shoppingListDTO.getName()))
-            {
-                StringBuilder name = new StringBuilder();
-                name.append(Util.msg.getMessage("shopping.list.default.name"));
-                name.append("-");
-                name.append(shoppingList.getPk().intValue());
-                shoppingList.setName(name.toString());
-            }
-            else
-            {
-                shoppingList.setName(shoppingListDTO.getName());
-            }
+            getEntityManager().flush();
+        }
+        else
+        {
+            shoppingList = find(shoppingListDTO.getPk());
+        }
 
-            edit(shoppingList);
-            shoppingListDTO.setPk(shoppingList.getPk());
-            return shoppingList;
+        shoppingList.setUpdatedAt(timeNow);
+
+        generateShoppingListName(shoppingList, shoppingListDTO);
+
+        edit(shoppingList);
+        shoppingListDTO.setPk(shoppingList.getPk());
+        return shoppingList;
     }
     
+    private void generateShoppingListName(ShoppingList entity, ShoppingListDTO dto)
+    {
+        if(Util.isEmptyString(dto.getName()))
+        {
+            StringBuilder name = new StringBuilder();
+            name.append(Util.msg.getMessage("shopping.list.default.name"));
+            name.append("-");
+            name.append(entity.getPk().intValue());
+            entity.setName(name.toString());
+        }
+        else
+        {
+            entity.setName(dto.getName());
+        }
+    }
 }

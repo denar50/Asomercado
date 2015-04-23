@@ -37,36 +37,42 @@ public class ListItemDAO extends AbstractFacade<ListItem> {
     
     public void saveListItems(List<ListItemDTO> dtos, ShoppingList shoppingList,Map<Integer, MeasurementUnit> measurementUnits) throws Exception
     {
-        EntityTransaction transaction = null;
-        try {
-            transaction = getEntityManager().getTransaction();
-            transaction.begin();
-
-            for(ListItemDTO dto : dtos)
+        for(ListItemDTO dto : dtos)
+        {
+            ListItem entity;
+            boolean isUpdate = false;
+            if(dto.getPk() == null)
             {
-                ListItem entity = new ListItem();
-                entity.setAmount(dto.getAmount());
-                entity.setDescription(dto.getDescription());
-                entity.setMeasurementUnit(measurementUnits.get(dto.getMeasurementUnitPk()));
-                entity.setShoppingList(shoppingList);
+                entity = new ListItem();
+            }
+            else
+            {
+                entity = find(dto.getPk());
+                isUpdate = true;
+            }
+            entity.setAmount(dto.getAmount());
+            entity.setDescription(dto.getDescription());
+            entity.setMeasurementUnit(measurementUnits.get(dto.getMeasurementUnitPk()));
+            entity.setShoppingList(shoppingList);
+            if(isUpdate)
+            {
+                edit(entity);
+            }
+            else
+            {
                 create(entity);
-                dto.setPk(entity.getPk());
-                dto.setModified(false);
             }
-
-            transaction.commit();
-        }
-        catch (RuntimeException e) {
-            if ( transaction != null && transaction.isActive() )
-            {
-                transaction.rollback();
-            }
-            throw e; 
-        }
-        finally {
-            getEntityManager().close();
+            
+            getEntityManager().flush();
+            dto.setPk(entity.getPk());
+            dto.setModified(false);
         }
     }
-
+    
+    public void deleteListItem(ListItemDTO dto) throws Exception
+    {
+        ListItem entity = find(dto.getPk());
+        remove(entity);
+    }
     
 }
