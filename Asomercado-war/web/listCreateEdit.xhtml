@@ -9,83 +9,125 @@
 
         <ui:composition template="listTemplate.xhtml">
 
-            <ui:define name="top">
-                top
+            <ui:define name="header">
+                <!--Header-->
+                <ui:include src="header.xhtml"></ui:include>
             </ui:define>
 
             <ui:define name="content">
                 <f:view>
-                    <h:form>
-                        <h1><h:outputText value="Create/Edit"/></h1>
-                        <h:panelGrid columns="2">
-                            <h:outputLabel value="#{msg['list.create.edit.list.name.label']}" for="name" />
-                            <h:inputText id="name" value="#{ShoppingListView.currentShoppingList.name}" title="#{msg['list.create.edit.list.name.label']}" required="false"/>
-                        </h:panelGrid>
-                        <h:panelGroup>
-                            <h1><h:outputText value="#{msg['list.create.edit.list.item.heading.label']}"/></h1>
-                            <h:dataTable id="itemListTable" value="#{ShoppingListView.currentListItems}" var="item">
-                                
-                                <h:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="#{msg['list.create.edit.list.item.description.label']}"/>
-                                    </f:facet>
-                                    <h:outputText value="#{item.description}"/>
-                                </h:column>
-                                
-                                <h:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="#{msg['list.create.edit.list.item.amount.label']}"/>
-                                    </f:facet>
-                                    <h:outputText value="#{ShoppingListView.getFormattedAmount(item)}"/>
-                                </h:column>
-                                
-                                <h:column>
-                                    <f:facet name="header">
-                                        <h:outputText value=""/>
-                                    </f:facet>
-                                    <h:commandButton immediate="true" value="#{msg['list.create.edit.list.item.edit.btn']}" actionListener="#{ShoppingListView.editItem(item)}" >
-                                    </h:commandButton>
-                                    
-                                </h:column>
-                                
-                                <h:column>
-                                    <f:facet name="header">
-                                        <h:outputText value=""/>
-                                    </f:facet>
-                                    <h:commandButton immediate="true" value="#{msg['list.create.edit.list.item.delete.btn']}" actionListener="#{ShoppingListView.deleteItem(item)}" >
-                                    </h:commandButton>
-                                    
-                                </h:column>
-                            </h:dataTable>
-                        </h:panelGroup>
-                    </h:form>
-                    <h:form>
-                            <h1><h:outputText value="#{msg['list.create.edit.list.item.form.label']}"/></h1>
-                            <h:panelGrid id="addListItemForm" columns="2">
-                                <h:outputLabel value="#{msg['list.create.edit.list.item.description.label']}" for="description" />
-                                <h:inputText id="description" value="#{ShoppingListView.currentListItem.description}" title="Description" required="true" requiredMessage="The Description field is required." />
-                                <h:outputLabel value="Amount:" for="amount" />
-                                <h:inputText id="amount" value="#{ShoppingListView.currentListItem.amount}" title="Amount" required="true" requiredMessage="The Amount field is required.">
-                                    <!-- display in at least 2 decimal points -->
-                                    <f:convertNumber type="number" pattern="#,###.##" maxFractionDigits="2" />
+                    <main>
+                        <h1><h:outputText value="#{msg['list.create.edit.list.heading.label']}"/></h1>
+                        <!-- This form contains all the list properties. So far there's only "name" -->
+                        <h:form>
+                            <div id="shopping-list-data">
+                                <!-- List name. Updated when the name changes.-->
+                                <h:outputLabel value="#{msg['list.create.edit.list.name.label']}" for="name" />
+                                <h:inputText id="name" value="#{ShoppingListView.currentShoppingList.name}"
+                                             title="#{msg['list.create.edit.list.name.label']}" required="false">
+                                    <f:ajax event="change" listener="#{ShoppingListView.updateShoppingList}" />
                                 </h:inputText>
-                                <h:outputLabel value="Unidad" for="unitFk" />
-                                <h:selectOneMenu id="unitFk" value="#{ShoppingListView.currentListItem.measurementUnitPk}" title="Unidad" required="true" requiredMessage="The UnitFk field is required.">
-                                    <!-- TODO: update below reference to list of available items-->
-                                    <f:selectItems value="#{ShoppingListView.measurementUnitsList}" var="unit" itemLabel="#{unit.description}" itemValue="#{unit.pk}">
-                                    </f:selectItems>
-                                    <f:converter converterId="integerObjectConverter"/>
-                                </h:selectOneMenu>
-
-                            </h:panelGrid>
-                            <h:commandButton value="#{msg['list.create.edit.list.item.add.btn']}" actionListener="#{ShoppingListView.addListItem}" />
-                            <h:commandButton immediate="true" value="#{msg['list.create.edit.list.item.form.reset.btn']}" actionListener="#{ShoppingListView.resetAddItemForm}"/>
+                            </div>
                         </h:form>
-                </f:view>
+                        <!--This form contains all the items in the list and gives the option of edit/delete.
+                        If edit is clicked, the user will be able to edit the item in the form below-->
+                        <h:form>
+                            <div>
+                                <!-- Displayed if the list has no items -->
+                                <h:panelGroup class="list-item-container" layout="block" rendered="#{empty ShoppingListView.currentListItems}">
+                                    <h:outputText value="#{msg['list.create.edit.list.item.heading.empty.label']}"/>
+                                </h:panelGroup>
+                                <!-- The list items -->
+                                <h:panelGroup class="list-item-container" layout="block" rendered="#{not empty ShoppingListView.currentListItems}">
+                                    <h1><h:outputText value="#{msg['list.create.edit.list.item.heading.label']}"/></h1>
+                                    <h:dataTable id="itemListTable" value="#{ShoppingListView.currentListItems}" var="item">
+                                        <!--Item description -->
+                                        <h:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="#{msg['list.create.edit.list.item.description.label']}"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.description}"/>
+                                        </h:column>
+                                        <!-- Item amount -->
+                                        <h:column>
+                                            <f:facet name="header">
+                                                <h:outputText value="#{msg['list.create.edit.list.item.amount.label']}"/>
+                                            </f:facet>
+                                            <h:outputText value="#{ShoppingListView.getFormattedAmount(item)}"/>
+                                        </h:column>
+                                        <!-- edit button -->
+                                        <h:column>
+                                            <f:facet name="header">
+                                                <h:outputText value=""/>
+                                            </f:facet>
+                                            <h:commandButton value="#{msg['list.create.edit.list.item.edit.btn']}" action="#{ShoppingListView.editItem(item)}" >
+                                            </h:commandButton>
 
+                                        </h:column>
+                                        <!-- delete button -->
+                                        <h:column>
+                                            <f:facet name="header">
+                                                <h:outputText value=""/>
+                                            </f:facet>
+                                            <h:commandButton value="#{msg['list.create.edit.list.item.delete.btn']}" action="#{ShoppingListView.deleteItem(item)}" >
+                                            </h:commandButton>
+
+                                        </h:column>
+                                    </h:dataTable>
+                                </h:panelGroup>
+                            </div>
+                        </h:form>
+                        
+                        <!--This is the form to add/edit a list item-->
+                        <h:form>
+                            <div id="add-edit-form-container">
+                                <h1><h:outputText value="#{msg['list.create.edit.list.item.form.label']}"/></h1>
+                                <!--Fields -->
+                                <h:panelGroup layout="block">
+                                    <!--Description field-->
+                                    <h:panelGroup layout="block">
+                                        <h:outputLabel value="#{msg['list.create.edit.list.item.description.label']}" for="description" />
+                                        <h:inputText id="description" value="#{ShoppingListView.currentListItem.description}" title="Description" required="true" requiredMessage="The Description field is required." />
+                                    </h:panelGroup>
+                                    <!--Amount field -->
+                                    <h:panelGroup layout="block">
+                                        <h:outputLabel value="#{msg['list.create.edit.list.item.amount.label']}" for="amount" />
+                                        <h:inputText id="amount" value="#{ShoppingListView.currentListItem.amount}" title="Amount" required="true" requiredMessage="The Amount field is required.">
+                                            <f:converter converterId="javax.faces.Float"/>
+                                            <f:validator validatorId="amountValidator" />
+                                        </h:inputText>
+                                    </h:panelGroup>   
+                                    <!--Measurement unit for the amount there is always one by default as this is mandatory-->
+                                    <h:panelGroup layout="block">
+                                        <h:selectOneMenu id="unitFk" value="#{ShoppingListView.currentListItem.measurementUnitPk}" title="Unidad" required="true" requiredMessage="The UnitFk field is required.">
+                                            <!-- TODO: update below reference to list of available items-->
+                                            <f:selectItems value="#{ShoppingListView.measurementUnitsList}" var="unit" itemLabel="#{unit.description}" itemValue="#{unit.pk}">
+                                            </f:selectItems>
+                                            <f:converter converterId="integerObjectConverter"/>
+                                        </h:selectOneMenu>
+                                    </h:panelGroup>
+                                    <!--Actions -->
+                                    <h:panelGroup>
+                                        <!-- Add button -->
+                                        <h:commandButton value="#{msg['list.create.edit.list.item.add.btn']}" action="#{ShoppingListView.addListItem}" />
+                                        <!-- Reset button -->
+                                        <h:commandButton immediate="true" value="#{msg['list.create.edit.list.item.form.reset.btn']}" type="reset">
+                                            <f:ajax listener="#{ShoppingListView.resetAddItemForm}" event="action" render="@all" />
+                                        </h:commandButton>
+                                        <h:commandButton immediate="true" value="#{msg['list.create.edit.list.item.form.return.btn']}" action="#{ShoppingListView.goToShoppingLists}"/>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                            </div>
+                        </h:form>
+                        
+                        <!--This script fixes the JSF View State Bug on forms after an ajax render call -->
+                        <h:outputScript library="js" name="fixViewStateJSFBug.js"/>
+                    </main>
+                </f:view>
+                
             </ui:define>
 
         </ui:composition>
-
+        
     </body>
 </html>

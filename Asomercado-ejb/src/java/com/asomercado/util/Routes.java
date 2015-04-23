@@ -11,4 +11,5 @@ package com.asomercado.util;
  */
 public class Routes {
     final public static String CREATE_EDIT_LIST = "listCreateEdit";
+    final public static String SHOW_SHOPPING_LIST = "listShow";
 }

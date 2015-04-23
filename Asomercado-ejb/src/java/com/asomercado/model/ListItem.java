@@ -32,7 +32,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ListItem.findAll", query = "SELECT l FROM ListItem l"),
     @NamedQuery(name = "ListItem.findByPk", query = "SELECT l FROM ListItem l WHERE l.pk = :pk"),
     @NamedQuery(name = "ListItem.findByAmount", query = "SELECT l FROM ListItem l WHERE l.amount = :amount"),
-    @NamedQuery(name = "ListItem.findByDescription", query = "SELECT l FROM ListItem l WHERE l.description = :description")})
+    @NamedQuery(name = "ListItem.findByDescription", query = "SELECT l FROM ListItem l WHERE l.description = :description"),
+    @NamedQuery(name = "ListItem.findByShoppingList", query = "SELECT l FROM ListItem l WHERE l.shoppingList.pk = :shoppingListPk")})
 public class ListItem extends BaseModel{
     private static final long serialVersionUID = 1L;
     @Id

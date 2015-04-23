@@ -10,19 +10,49 @@
 
         <ui:composition template="./listTemplate.xhtml">
 
-            <ui:define name="top">
-                <h:outputText value="#{msg['list.show.heading.text']}" />
+            <ui:define name="header">
+                <!--the inclusion line in the including page-->
+                <ui:include src="header.xhtml"></ui:include>
             </ui:define>
 
             <ui:define name="content">
                 <h:form>
                     <h:commandButton value="Crear una lista" action="#{ShoppingListView.goCreateNewList}" />
-                    <c:forEach var="shoppingList" items="#{ShoppingListView.shoppingLists}">
-                        <h:commandLink value="#{shoppingList.name}" action="#{ShoppingListView.goEditShoppingList(shoppingList)}"/>
-                    </c:forEach>
+                    <f:view>
+                        <h:form>
+                            <h:dataTable value="#{ShoppingListView.shoppingLists}" var="shoppingList" rendered="#{not empty ShoppingListView.shoppingLists}">
+                                
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="#{msg['list.show.created.shopping.lists.heading.text']}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{shoppingList.name}"/>
+                                    
+                                </h:column>
+                                
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value=""/>
+                                    </f:facet>
+                                    <h:commandButton immediate="true" value="#{msg['list.create.edit.list.item.edit.btn']}" action="#{ShoppingListView.goEditShoppingList(shoppingList)}" >
+                                    </h:commandButton>
+                                    
+                                </h:column>
+                                
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value=""/>
+                                    </f:facet>
+                                    <h:commandButton immediate="true" value="#{msg['list.show.delete.btn']}" action="#{ShoppingListView.deleteShoppingList(shoppingList)}" >
+                                    </h:commandButton>
+                                    
+                                </h:column>
+                            </h:dataTable>
+                        </h:form>
+                    </f:view>
 
                 </h:form>
-            </ui:define>
+            </ui:define> 
 
         </ui:composition>
 

@@ -9,12 +9,9 @@ import com.asomercado.dto.ListItemDTO;
 import com.asomercado.model.ListItem;
 import com.asomercado.model.MeasurementUnit;
 import com.asomercado.model.ShoppingList;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
 
 /**
@@ -72,4 +69,16 @@ public class ListItemDAO extends AbstractFacade<ListItem> {
         remove(entity);
     }
     
+    public List<ListItem> getItemsByShoppingList(Integer shoppingListPk) throws Exception
+    {
+        return (List<ListItem>) getEntityManager().createNamedQuery("ListItem.findByShoppingList").setParameter("shoppingListPk", shoppingListPk).getResultList();
+    }
+    
+    public void deleteItemsFromShoppingList(Integer shoppingListPk) throws Exception
+    {
+        for(ListItem listItem : getItemsByShoppingList(shoppingListPk))
+        {
+            remove(listItem);
+        }
+    }
 }

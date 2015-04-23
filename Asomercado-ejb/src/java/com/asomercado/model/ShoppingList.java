@@ -60,7 +60,7 @@ public class ShoppingList extends BaseModel {
     @Column(name = "created_at")
     @Temporal(TemporalType.DATE)
     private Date createdAt;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "shoppingList", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "shoppingList", fetch = FetchType.LAZY, orphanRemoval = true)
     private java.util.List<ListItem> listItemList;
 
     public ShoppingList() {

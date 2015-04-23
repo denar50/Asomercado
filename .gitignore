@@ -1,2 +1,9 @@
 /Asomercado-ejb/build/
 /Asomercado-ejb/dist/
+/nbproject/private/
+/build/
+/dist/
+/Asomercado-war/nbproject/private/
+/Asomercado-ejb/nbproject/private/
+/Asomercado-war/build/
+/Asomercado-war/dist/

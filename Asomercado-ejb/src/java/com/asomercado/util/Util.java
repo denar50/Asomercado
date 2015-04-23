@@ -7,6 +7,7 @@ package com.asomercado.util;
 
 import com.asomercado.util.messages.MessagesRetriever;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.Arrays;
 
 /**
@@ -37,7 +38,12 @@ public class Util {
         String decimalDigitsSharp = new String(chars);
         return new DecimalFormat("#."+decimalDigitsSharp).format(number);
     }
-    
+    public static int numberDecimalsCount(String number)
+    {
+        number = number.trim();
+        int dotIndex = number.lastIndexOf('.');
+        return number.substring(dotIndex + 8).length();
+    }
     public static Integer stringToInt(String value)
     {
         try
@@ -67,6 +73,18 @@ public class Util {
     public static boolean isEmptyString(String str)
     {
         return str == null || str.trim().equals("");
+    }
+    
+    public static String toXDecimals(Number number, int x)
+    {
+        DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols();
+        otherSymbols.setDecimalSeparator('.');
+        otherSymbols.setGroupingSeparator(',');
+        DecimalFormat df = new DecimalFormat();
+        df.setDecimalFormatSymbols(otherSymbols);
+        df.setMinimumFractionDigits(2);
+        df.setMaximumFractionDigits(2);
+        return df.format(number);
     }
     
 }

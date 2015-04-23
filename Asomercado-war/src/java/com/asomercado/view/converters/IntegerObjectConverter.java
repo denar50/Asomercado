@@ -5,7 +5,6 @@
  */
 package com.asomercado.view.converters;
 
-import com.asomercado.dto.MeasurementUnitDTO;
 import com.asomercado.util.Util;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;

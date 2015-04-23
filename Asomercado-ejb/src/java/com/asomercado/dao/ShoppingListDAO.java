@@ -74,4 +74,9 @@ public class ShoppingListDAO extends AbstractFacade<ShoppingList> {
             entity.setName(dto.getName());
         }
     }
+    
+    public void deleteShoppingList(ShoppingListDTO shoppingList) throws Exception
+    {
+        remove(find(shoppingList.getPk()));
+    }
 }

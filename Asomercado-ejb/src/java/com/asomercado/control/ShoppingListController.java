@@ -57,7 +57,11 @@ public class ShoppingListController {
         }
         return measurementUnits;
     }
-    
+    public void saveShoppingList(ShoppingListDTO shoppingListDTO) throws Exception
+    {
+        shoppingListDAO.saveShoppingList(shoppingListDTO);
+    }
+
     public void saveListItem(ShoppingListDTO shoppingListDTO, ListItemDTO listItem) throws Exception
     {
         ShoppingList shoppingList = shoppingListDAO.saveShoppingList(shoppingListDTO);
@@ -83,9 +87,9 @@ public class ShoppingListController {
         return dtoList;
     }
     
-    public List<ListItemDTO> getShoppingListItems(Integer shoppingListPk)
+    public List<ListItemDTO> getShoppingListItems(Integer shoppingListPk) throws Exception
     {
-        List<ListItem> entities = shoppingListDAO.find(shoppingListPk).getListItemList();
+        List<ListItem> entities = listItemDAO.getItemsByShoppingList(shoppingListPk);
         List<ListItemDTO> dtos = new ArrayList<>();
         for(ListItem entity : entities)
         {
@@ -93,5 +97,10 @@ public class ShoppingListController {
         }
         return dtos;
     }
-
+    
+    public void deleteShoppingList(ShoppingListDTO shoppingListDTO) throws Exception
+    {
+        listItemDAO.deleteItemsFromShoppingList(shoppingListDTO.getPk());
+        shoppingListDAO.deleteShoppingList(shoppingListDTO);
+    }
 }

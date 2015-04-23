@@ -19,6 +19,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.FloatConverter;
+import org.jboss.weld.context.RequestContext;
 
 /**
  *
@@ -54,10 +55,18 @@ public class ShoppingListView extends BaseView{
     }
     
     public String goEditShoppingList(ShoppingListDTO shoppingListDTO)
-    {
-        currentShoppingList = shoppingListDTO;
-        currentListItems = shoppingListController.getShoppingListItems(currentShoppingList.getPk());
-        return Routes.CREATE_EDIT_LIST;
+    { 
+        try
+        {
+            currentShoppingList = shoppingListDTO;
+            currentListItems = shoppingListController.getShoppingListItems(currentShoppingList.getPk());
+            return Routes.CREATE_EDIT_LIST;
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        return "";
     }
 
     public ShoppingListDTO getCurrentShoppingList() {
@@ -159,7 +168,7 @@ public class ShoppingListView extends BaseView{
     
     public String getFormattedAmount(ListItemDTO item)
     {
-        return item.getAmount() + " " + getMeasurementUnitsMap().get(item.getMeasurementUnitPk()).getDescription();
+        return Util.toXDecimals(item.getAmount(), 2) + " " + getMeasurementUnitsMap().get(item.getMeasurementUnitPk()).getDescription();
     }
 
     public List<MeasurementUnitDTO> getMeasurementUnitsList() {
@@ -193,4 +202,42 @@ public class ShoppingListView extends BaseView{
         return shoppingListController.getShoppingLists();
     }
     
+    public void updateShoppingList()
+    {
+        try
+        {
+            shoppingListController.saveShoppingList(currentShoppingList);
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    public void deleteShoppingList(ShoppingListDTO shoppingList)
+    {
+        try
+        {
+            shoppingListController.deleteShoppingList(shoppingList);
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    public void resetView()
+    {
+        currentListItem = null;
+        currentListItemBeforeEdit = null;
+        currentListItems = null;
+        currentListItemsMap = null;
+        currentShoppingList = null;
+    }
+    
+    public String goToShoppingLists()
+    {
+        resetView();
+        return Routes.SHOW_SHOPPING_LIST;
+    }
 }
