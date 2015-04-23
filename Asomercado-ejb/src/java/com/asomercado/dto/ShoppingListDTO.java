@@ -15,11 +15,12 @@ public class ShoppingListDTO extends BaseDTO{
     private String name;
     public ShoppingListDTO()
     {
-        
+        super();
     }
     
     public ShoppingListDTO(ShoppingList shoppingList)
     {
+        super();
         this.pk = shoppingList.getPk();
         this.name = shoppingList.getName();
     }

@@ -5,6 +5,7 @@
  */
 package com.asomercado.util;
 
+import com.asomercado.util.messages.MessagesRetriever;
 import java.text.DecimalFormat;
 import java.util.Arrays;
 
@@ -13,6 +14,8 @@ import java.util.Arrays;
  * @author USUARIO1
  */
 public class Util {
+    
+    public static final MessagesRetriever msg = new MessagesRetriever();
     
     public static Float stringToFloat(String value)
     {
@@ -46,6 +49,24 @@ public class Util {
             e.printStackTrace();
             return 0;
         }
+    }
+    
+    public static String intToString(Integer value)
+    {
+        try
+        {
+            return String.valueOf(value.intValue());
+        }
+        catch(NumberFormatException e)
+        {
+            e.printStackTrace();
+            return "";
+        }
+    }
+    
+    public static boolean isEmptyString(String str)
+    {
+        return str == null || str.trim().equals("");
     }
     
 }

@@ -10,12 +10,14 @@ import com.asomercado.dto.ListItemDTO;
 import com.asomercado.dto.MeasurementUnitDTO;
 import com.asomercado.dto.ShoppingListDTO;
 import com.asomercado.util.Routes;
+import com.asomercado.util.Util;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.convert.FloatConverter;
 
 /**
@@ -24,7 +26,7 @@ import javax.faces.convert.FloatConverter;
  */
 @ManagedBean(name = "ShoppingListView")
 @SessionScoped
-public class ShoppingListView {
+public class ShoppingListView extends BaseView{
     @EJB
     private ShoppingListController shoppingListController;
     
@@ -77,8 +79,9 @@ public class ShoppingListView {
         this.currentListItem = currentListItem;
     }
     
-    public void editItem(Integer itemPk)
+    public void editItem()
     {
+        Integer itemPk = Util.stringToInt(getRequestParameter("pk"));
         ListItemDTO listItem = getListItemFromCurrentListItemList(itemPk);
         currentListItems.remove(listItem);
         currentListItem = listItem;
@@ -87,6 +90,14 @@ public class ShoppingListView {
     
     public void addNewListItem()
     {
+        try
+        {
+            shoppingListController.saveShoppingList(currentShoppingList, currentListItems);
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
         currentListItems.add(currentListItem);
         resetAddItemForm();
     }
@@ -154,5 +165,7 @@ public class ShoppingListView {
         }
         return searchResult;
     }
+    
+    
     
 }

@@ -6,9 +6,6 @@
 package com.asomercado.dto;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  *
@@ -17,7 +14,12 @@ import java.util.Map;
 public class BaseDTO implements Serializable{
     
     protected Integer pk;
-
+    protected boolean modified;
+    
+    protected BaseDTO()
+    {
+        modified = false;
+    }
     public Integer getPk() {
         return pk;
     }
@@ -25,5 +27,15 @@ public class BaseDTO implements Serializable{
     public void setPk(Integer pk) {
         this.pk = pk;
     }
+
+    public boolean isModified() {
+        return modified;
+    }
+
+    public void setModified(boolean modified) {
+        this.modified = modified;
+    }
+    
+    
     
 }

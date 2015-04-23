@@ -20,10 +20,12 @@ public class MeasurementUnitDTO extends BaseDTO{
     
     public MeasurementUnitDTO()
     {
+        super();
     }
     
     public MeasurementUnitDTO(MeasurementUnit measurementUnit)
     {
+        super();
         this.pk = measurementUnit.getPk();
         this.description = measurementUnit.getDescription();
     }

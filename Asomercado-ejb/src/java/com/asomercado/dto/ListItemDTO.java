@@ -19,11 +19,12 @@ public class ListItemDTO extends BaseDTO{
     
     public ListItemDTO()
     {
-        
+        super();
     }
     
     public ListItemDTO(ListItem listItem)
     {
+        super();
         this.pk = listItem.getPk();
         this.description = listItem.getDescription();
         this.amount = listItem.getAmount();
