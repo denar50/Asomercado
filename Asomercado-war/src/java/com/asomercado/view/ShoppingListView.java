@@ -12,6 +12,7 @@ import java.util.Map;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.event.ValueChangeEvent;
 
 /**
  * View class to interact with shopping lists
@@ -223,7 +224,11 @@ public class ShoppingListView extends BaseView{
         
         return shoppingLists;
     }
-    
+    public void updateShoppingListName(ValueChangeEvent event)
+    {
+        currentShoppingList.setName((String) event.getNewValue());
+        updateShoppingList();
+    }
     public void updateShoppingList()
     {
         try

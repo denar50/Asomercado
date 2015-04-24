@@ -42,13 +42,7 @@
                                     </f:facet>
                                     <h:commandButton immediate="true" class="button action" value="#{msg['list.create.edit.list.item.edit.btn']}" action="#{ShoppingListView.goEditShoppingList(shoppingList)}" >
                                     </h:commandButton>
-
-                                </h:column>
-
-                                <h:column>
-                                    <f:facet name="header">
-                                        <h:outputText value=""/>
-                                    </f:facet>
+                                    
                                     <h:commandButton onclick="if (! confirm('#{msg['list.show.delete.warning.message']}')) return false" class="button warning" value="#{msg['list.show.delete.btn']}" action="#{ShoppingListView.deleteShoppingList(shoppingList)}" >
                                     </h:commandButton>
 
@@ -59,9 +53,9 @@
                         <h:panelGroup rendered="#{ShoppingListView.shoppingListTablePages.size() gt 1}" class="pagination-container" layout="block">
                             <h:form>
                                 <p><h:outputText value="#{msg['list.show.pagination.heading.text']}" /></p>
-                                <c:forEach var="page" items="#{ShoppingListView.shoppingListTablePages}">
-                                    <h:commandButton value="#{page}" actionListener="#{ShoppingListView.refreshShoppingListTablePage(page)}"/>
-                                </c:forEach>
+                                <ui:repeat var="page" value="#{ShoppingListView.shoppingListTablePages}">
+                                    <h:commandButton class="#{ShoppingListView.currentPage eq page ? 'page-selected' : ''}" value="#{page}" actionListener="#{ShoppingListView.refreshShoppingListTablePage(page)}"/>
+                                </ui:repeat>
                             </h:form>
                         </h:panelGroup>
                     </h:form>

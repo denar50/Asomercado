@@ -70,10 +70,23 @@ h2#main-subtitle
 {
     text-align: left;
 }
+.list-item-container table td:last-of-type
+{
+    width: 126px;
+}
+.shopping-lists-container table td:last-of-type
+{
+    width: 121px;
+}
 .item-row
 {
     height: 2.3rem;
     box-sizing: border-box;
+}
+
+.table-column-1
+{
+    width: 80%;
 }
 
 tr[class="item-row"]:nth-child(even)
@@ -93,6 +106,13 @@ input[type="text"], select
     line-height: 1.2rem;
     padding: 0.1rem;
     box-sizing: border-box;
+}
+
+.page-selected
+{
+    border-color: #00355a;
+    background-color: #00355a;
+    color: white;
 }
 .add-edit-field
 {
@@ -120,3 +140,8 @@ div[class="add-edit-field"]:nth-child(4)
     margin-top: 20px;
 }
 
+.validation-message
+{
+    font-size: 2rem;
+    font-color: green;
+}
