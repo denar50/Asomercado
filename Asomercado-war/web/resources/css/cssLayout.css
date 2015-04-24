@@ -1,3 +1,13 @@
+@font-face
+{
+  font-family: 'open-sans'; 
+  src:  url("#{resource['fonts/open-sans/opensans-regular-webfont.eot']}"),
+        url("#{resource['fonts/open-sans/opensans-regular-webfont.ttf']}") format('truetype'),
+        url("#{resource['fonts/open-sans/opensans-regular-webfont.woff']}") format('woff'),
+        url("#{resource['fonts/open-sans/opensans-regular-webfont.svg']}") format('svg');
+}
+
+
 html {
   -webkit-font-smoothing: antialiased;
   background-color: #d8d8d8;
@@ -7,7 +17,7 @@ body {
   margin: 0 auto;
   padding: 30px;
   max-width: 700px;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'open-sans','Roboto', sans-serif;
   background-color: #fff;
   height: 100%;
 }

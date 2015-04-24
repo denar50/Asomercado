@@ -23,7 +23,7 @@ public class FieldLengthValidator extends ValidatorBase{
         
         if(value.length() > 250)
         {
-            addErrorMessage("list.create.edit.validate.description.too.long.error");
+            addErrorMessage("list.create.edit.validate.text.too.long.error");
         }
         
         processErrors();

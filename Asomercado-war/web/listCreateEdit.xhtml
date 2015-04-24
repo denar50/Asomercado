@@ -86,7 +86,6 @@
                                         <h:inputText id="description" value="#{ShoppingListView.currentListItem.description}" title="Description" required="true" requiredMessage="#{msg['list.create.edit.validate.description.empty.error']}">
                                             <f:validator validatorId="fieldLengthValidator" />
                                         </h:inputText>
-                                        <p class="validation-message"><h:message for="description" /></p>
                                     </h:panelGroup>
                                     <!--Amount field -->
                                     <h:panelGroup class="add-edit-field" layout="block">
@@ -95,7 +94,6 @@
                                             <f:converter converterId="javax.faces.Float"/>
                                             <f:validator validatorId="amountValidator" />
                                         </h:inputText>
-                                        <p class="validation-message"><h:message for="amount" /></p>
                                     </h:panelGroup>
                                     <!--Measurement unit for the amount there is always one by default as this is mandatory-->
                                     <h:panelGroup class="add-edit-field" layout="block">
@@ -104,6 +102,11 @@
                                             </f:selectItems>
                                             <f:converter converterId="integerObjectConverter"/>
                                         </h:selectOneMenu>
+                                    </h:panelGroup>
+                                    <!-- Validation messages -->
+                                    <h:panelGroup id="errors-container" layout="block">
+                                        <p class="validation-message"><h:message for="description" /></p>
+                                        <p class="validation-message"><h:message for="amount" /></p>
                                     </h:panelGroup>
                                     <!--Actions -->
                                     <h:panelGroup class="add-edit-field" layout="block">
@@ -116,6 +119,7 @@
                                         <!--Return button -->
                                         <h:commandButton class="button action" immediate="true" value="#{msg['list.create.edit.list.item.form.return.btn']}" action="#{ShoppingListView.goToShoppingLists}"/>
                                     </h:panelGroup>
+                                    
                                 </h:panelGroup>
                             </div>
                         </h:form>
