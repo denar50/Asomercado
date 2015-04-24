@@ -14,8 +14,12 @@ import javax.faces.validator.FacesValidator;
 import javax.faces.validator.ValidatorException;
 
 /**
- *
- * @author USUARIO1
+ * Validates the amount of a list item.
+ * Validations:
+ * - the object must be float.
+ * - the value must be greater than 0.01
+ * - the value must be less than 1'000.000
+ * @author Edgar Santos
  */
 @FacesValidator("amountValidator")
 public class AmountValidator extends ValidatorBase{

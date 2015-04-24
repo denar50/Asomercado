@@ -12,8 +12,8 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
 /**
- *
- * @author denar50
+ * Converts an object to Integer and viceversa.
+ * @author Edgar Santos
  */
 @FacesConverter(value = "integerObjectConverter")
 public class IntegerObjectConverter implements Converter{

@@ -11,7 +11,9 @@ import javax.faces.validator.FacesValidator;
 import javax.faces.validator.ValidatorException;
 
 /**
- *
+ * Validates the amount of a list item.
+ * Validations:
+ * - the length of the value is up to 250 or less
  * @author Edgar Santos
  */
 @FacesValidator("fieldLengthValidator")

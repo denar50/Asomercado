@@ -15,8 +15,8 @@ import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
 /**
- *
- * @author USUARIO1
+ * This is the Base class for all validators created in this project. It has common logic.
+ * @author Edgar Santos
  */
 public abstract class ValidatorBase implements Validator{
     protected List<FacesMessage> errors = new ArrayList<>();
