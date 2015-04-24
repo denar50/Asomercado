@@ -1,25 +1,28 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.asomercado.dto;
 
 import java.io.Serializable;
 
 /**
- *
- * @author Edgar
+ * parent class of all DTO in this application. It (must) contains common logic
+ * @author Edgar Santos
  */
 public class BaseDTO implements Serializable{
     
     protected Integer pk;
     protected boolean modified;
     
+    /**
+     * Constructor. Sets the modified property to false by default.
+     */
     protected BaseDTO()
     {
         modified = false;
     }
+    
+    /**
+     * 
+     * @return the primary key
+     */
     public Integer getPk() {
         return pk;
     }
@@ -28,6 +31,10 @@ public class BaseDTO implements Serializable{
         this.pk = pk;
     }
 
+    /**
+     * 
+     * @return whether the DTO property modified HAS BEEN SET to true or not.
+     */
     public boolean isModified() {
         return modified;
     }

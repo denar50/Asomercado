@@ -1,14 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.asomercado.dto;
 
 import com.asomercado.model.ListItem;
 
 /**
- *
+ * Data Transport Object for ListItem entities.
  * @author Edgar
  */
 public class ListItemDTO extends BaseDTO{
@@ -17,11 +12,18 @@ public class ListItemDTO extends BaseDTO{
     private Integer measurementUnitPk;
     private Integer shoppingListPk;
     
+    /**
+     * Constructor
+     */
     public ListItemDTO()
     {
         super();
     }
     
+    /**
+     * Constructor that extracts all the relevant information of the ListItem entity object
+     * @param listItem 
+     */
     public ListItemDTO(ListItem listItem)
     {
         super();
@@ -44,6 +46,10 @@ public class ListItemDTO extends BaseDTO{
         return amount;
     }
     
+    /**
+     * Rough implementation of a clone method that returns a new ListItemDTO with all the information of the caller object.
+     * @return 
+     */
     @Override
     public ListItemDTO clone()
     {

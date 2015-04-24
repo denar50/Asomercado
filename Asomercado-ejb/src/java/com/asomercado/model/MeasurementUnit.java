@@ -1,11 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.asomercado.model;
 
-import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -25,8 +19,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
- *
- * @author USUARIO1
+ * Entity class for table unit representing the measurement units
+ * @author Edgar Santos
  */
 @Entity
 @Table(name = "unit")
@@ -36,17 +30,23 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "MeasurementUnit.findByPk", query = "SELECT u FROM MeasurementUnit u WHERE u.pk = :pk"),
     @NamedQuery(name = "MeasurementUnit.findByDescription", query = "SELECT u FROM MeasurementUnit u WHERE u.description = :description")})
 public class MeasurementUnit extends BaseModel {
+    
     private static final long serialVersionUID = 1L;
+    
+    /*Mapping of all the table fields*/
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "pk")
     private Integer pk;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
     @Column(name = "description")
     private String description;
+    
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "measurementUnit", fetch = FetchType.LAZY)
     private List<ListItem> listItemList;
 
@@ -62,6 +62,10 @@ public class MeasurementUnit extends BaseModel {
         this.description = description;
     }
 
+    /**
+     * 
+     * @return the primary key 
+     */
     public Integer getPk() {
         return pk;
     }

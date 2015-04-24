@@ -22,8 +22,8 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- *
- * @author USUARIO1
+ * Entity class for table list_item representing the list items
+ * @author Edgar Santos
  */
 @Entity
 @Table(name = "list_item")
@@ -35,41 +35,67 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ListItem.findByDescription", query = "SELECT l FROM ListItem l WHERE l.description = :description"),
     @NamedQuery(name = "ListItem.findByShoppingList", query = "SELECT l FROM ListItem l WHERE l.shoppingList.pk = :shoppingListPk")})
 public class ListItem extends BaseModel{
+    
     private static final long serialVersionUID = 1L;
+    /*Mapping of all table fields*/
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "pk")
     private Integer pk;
+    
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "amount")
     private float amount;
+    
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
     @Column(name = "description")
     private String description;
+    
+    
     @JoinColumn(name = "unit_fk", referencedColumnName = "pk")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private MeasurementUnit measurementUnit;
+    
+    
     @JoinColumn(name = "list_fk", referencedColumnName = "pk")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private ShoppingList shoppingList;
 
+    /**
+     * Constructor
+     */
     public ListItem() {
     }
 
+    /**
+     * Constructor
+     * @param pk 
+     */
     public ListItem(Integer pk) {
         this.pk = pk;
     }
 
+    /**
+     * Constructor
+     * @param pk
+     * @param amount
+     * @param description 
+     */
     public ListItem(Integer pk, float amount, String description) {
         this.pk = pk;
         this.amount = amount;
         this.description = description;
     }
 
+    /**
+     * @return the primary key
+     */
     public Integer getPk() {
         return pk;
     }

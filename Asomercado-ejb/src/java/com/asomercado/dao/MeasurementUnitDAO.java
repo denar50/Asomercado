@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.asomercado.dao;
 
 import com.asomercado.dto.ListItemDTO;
@@ -18,46 +13,43 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 /**
- *
- * @author USUARIO1
+ * This DAO processes all the database transactions with the entity MeasurementUnit
+ * @author Edgar Santos
  */
 @Stateless
 public class MeasurementUnitDAO extends AbstractFacade<MeasurementUnit> {
     @PersistenceContext(unitName = "Asomercado-ejbPU")
     private EntityManager em;
 
+    /**
+     * 
+     * @return the entity manager of the transaction 
+     */
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
 
+    /**
+     * Constructor
+     */
     public MeasurementUnitDAO() {
         super(MeasurementUnit.class);
     }
     
-    public Map<Integer, MeasurementUnit> getMeasurementUnitsForListItemsDto(List<ListItemDTO> listItemsDto)
+    /**
+     * 
+     * @param list
+     * @return A map mapped by primery key of all the measurement units in the database
+     */
+    public Map<Integer, MeasurementUnit> getMapFromList(List<MeasurementUnit> list)
     {
-        String queryString = "SELECT measurementUnit from MeasurementUnit measurementUnit where measurementUnit.pk IN :pks"; 
-        Query queryObject = getEntityManager().createQuery(queryString, MeasurementUnit.class);
-        List<String> pks = new ArrayList<>();
-        for(ListItemDTO dto : listItemsDto)
+        Map<Integer, MeasurementUnit> map = new HashMap<>();
+        for(MeasurementUnit entity : list)
         {
-            pks.add(Util.intToString(dto.getMeasurementUnitPk()));
+            map.put(entity.getPk(), entity);
         }
-
-        queryObject.setParameter("pks", pks);
-        List<MeasurementUnit> results = (List<MeasurementUnit>) queryObject.getResultList();
-        return getMapFromList(results);
-   }
-    
-   public Map<Integer, MeasurementUnit> getMapFromList(List<MeasurementUnit> list)
-   {
-       Map<Integer, MeasurementUnit> map = new HashMap<>();
-       for(MeasurementUnit entity : list)
-       {
-           map.put(entity.getPk(), entity);
-       }
-       return map;
-   }
+        return map;
+    }
     
 }

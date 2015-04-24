@@ -1,28 +1,29 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.asomercado.dto;
 
 import com.asomercado.model.MeasurementUnit;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
- *
- * @author Edgar
+ * Data Transport Object for ListItem entities.
+ * @author Edgar Santos
  */
 public class MeasurementUnitDTO extends BaseDTO{
     private String description;
     
+    /**
+     * Constructor
+     */
     public MeasurementUnitDTO()
     {
         super();
     }
     
+    /**
+     * Constructor that extracts all the relevant information of the MeasurementUnit entity object
+     * @param measurementUnit 
+     */
     public MeasurementUnitDTO(MeasurementUnit measurementUnit)
     {
         super();
@@ -38,6 +39,11 @@ public class MeasurementUnitDTO extends BaseDTO{
         this.description = description;
     }
     
+    /**
+     * 
+     * @param measurementUnits
+     * @return a map whose key is the primary key of a measurement unit. Its value is the measurement unit.
+     */
     public static Map<Integer, MeasurementUnitDTO> getDTOMapFromDTOList(List<MeasurementUnitDTO> measurementUnits)
     {
         Map<Integer, MeasurementUnitDTO> measurementUnitsDTOList = new HashMap<>();

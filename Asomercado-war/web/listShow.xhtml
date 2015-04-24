@@ -16,42 +16,49 @@
             </ui:define>
 
             <ui:define name="content">
-                <h:form>
-                    <h:commandButton value="Crear una lista" action="#{ShoppingListView.goCreateNewList}" />
-                    <f:view>
-                        <h:form>
-                            <h:dataTable value="#{ShoppingListView.shoppingLists}" var="shoppingList" rendered="#{not empty ShoppingListView.shoppingLists}">
-                                
+                <f:view>
+                    <h:form>
+                        <h:commandButton class="button action" value="Crear una lista" action="#{ShoppingListView.goCreateNewList}" />
+                    </h:form>
+                    
+                    <h:form>
+                        <h:panelGroup rendered="#{empty ShoppingListView.shoppingLists}" class="shopping-lists-container" layout="block">
+                            <h3><h:outputText value="#{msg['list.show.empty.text']}" /></h3>
+                        </h:panelGroup>
+                        <h:panelGroup rendered="#{not empty ShoppingListView.shoppingLists}" class="shopping-lists-container" layout="block">
+                            <h:dataTable rowClasses="item-row" value="#{ShoppingListView.shoppingLists}" var="shoppingList" rendered="#{not empty ShoppingListView.shoppingLists}">
+
                                 <h:column>
                                     <f:facet name="header">
                                         <h:outputText value="#{msg['list.show.created.shopping.lists.heading.text']}"/>
                                     </f:facet>
                                     <h:outputText value="#{shoppingList.name}"/>
-                                    
+
                                 </h:column>
-                                
+
                                 <h:column>
                                     <f:facet name="header">
                                         <h:outputText value=""/>
                                     </f:facet>
-                                    <h:commandButton immediate="true" value="#{msg['list.create.edit.list.item.edit.btn']}" action="#{ShoppingListView.goEditShoppingList(shoppingList)}" >
+                                    <h:commandButton immediate="true" class="button action" value="#{msg['list.create.edit.list.item.edit.btn']}" action="#{ShoppingListView.goEditShoppingList(shoppingList)}" >
                                     </h:commandButton>
-                                    
+
                                 </h:column>
-                                
+
                                 <h:column>
                                     <f:facet name="header">
                                         <h:outputText value=""/>
                                     </f:facet>
-                                    <h:commandButton immediate="true" value="#{msg['list.show.delete.btn']}" action="#{ShoppingListView.deleteShoppingList(shoppingList)}" >
+                                    <h:commandButton onclick="if (! confirm('#{msg['list.show.delete.warning.message']}')) return false" class="button warning" value="#{msg['list.show.delete.btn']}" action="#{ShoppingListView.deleteShoppingList(shoppingList)}" >
                                     </h:commandButton>
-                                    
+
                                 </h:column>
                             </h:dataTable>
-                        </h:form>
-                    </f:view>
+                        </h:panelGroup>
+                    </h:form>
+            </f:view>
 
-                </h:form>
+                
             </ui:define> 
 
         </ui:composition>

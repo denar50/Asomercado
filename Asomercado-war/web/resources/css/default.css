@@ -33,22 +33,40 @@ h2#main-subtitle
     margin-top: 0.3rem;
 }
 
+.shopping-lists-container,
+.list-item-container
+{
+    border: 1px solid rgba(0,0,0,.2);
+    padding: 5px;
+    min-height: 500px;
+    margin-top: 20px;
+}
+
+.shopping-lists-container h3,
+.list-item-container h3
+{
+    text-align: center;
+    height:100px;
+    line-height: 100px;
+    margin-top: 200px;
+    color: rgba(0, 53, 90, .5);
+}
 
 #header
 {
     border-bottom: 1px solid rgba(0,0,0,.2);
 }
 .list-item-container{
-    padding-bottom: 10px;
-    border-bottom: 1px solid rgba(0,0,0,.2);
     margin-bottom: 10px;
 }
-.list-item-container table
+.list-item-container table,
+.shopping-lists-container table
 {
     width: 100%;
     border-collapse: collapse;
 }
-.list-item-container table th
+.list-item-container table th,
+.shopping-lists-container table th
 {
     text-align: left;
 }

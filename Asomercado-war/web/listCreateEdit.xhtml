@@ -35,7 +35,7 @@
                             <div>
                                 <!-- Displayed if the list has no items -->
                                 <h:panelGroup class="list-item-container" layout="block" rendered="#{empty ShoppingListView.currentListItems}">
-                                    <h:outputText value="#{msg['list.create.edit.list.item.heading.empty.label']}"/>
+                                    <h3><h:outputText value="#{msg['list.create.edit.list.item.heading.empty.label']}"/></h3>
                                 </h:panelGroup>
                                 <!-- The list items -->
                                 <h:panelGroup class="list-item-container" layout="block" rendered="#{not empty ShoppingListView.currentListItems}">
