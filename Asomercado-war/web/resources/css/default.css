@@ -38,7 +38,7 @@ h2#main-subtitle
 {
     border: 1px solid rgba(0,0,0,.2);
     padding: 5px;
-    min-height: 500px;
+    min-height: 300px;
     margin-top: 20px;
 }
 
@@ -48,7 +48,7 @@ h2#main-subtitle
     text-align: center;
     height:100px;
     line-height: 100px;
-    margin-top: 200px;
+    margin-top: 100px;
     color: rgba(0, 53, 90, .5);
 }
 

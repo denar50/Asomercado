@@ -106,12 +106,13 @@ public class ShoppingListController {
     }
     
     /**
-     * @return a list of ShoppingListDTO containing all the shopping lists in the database 
+     * @param range
+     * @return a list of ShoppingListDTO containing all the shopping lists in the database based on the given range
      */
-    public List<ShoppingListDTO> getShoppingLists()
+    public List<ShoppingListDTO> getShoppingLists(int[] range)
     {
         List<ShoppingListDTO> dtoList = new ArrayList<>();
-        for(ShoppingList entity : shoppingListDAO.findAll())
+        for(ShoppingList entity : shoppingListDAO.findRange(range))
         {
             ShoppingListDTO dto = new ShoppingListDTO(entity);
             dtoList.add(dto);
@@ -145,5 +146,14 @@ public class ShoppingListController {
     {
         listItemDAO.deleteItemsFromShoppingList(shoppingListDTO.getPk());
         shoppingListDAO.deleteShoppingList(shoppingListDTO);
+    }
+    
+    /**
+     * @return the total count of all shopping lists.
+     * @throws Exception 
+     */
+    public int getShoppingListCount() throws Exception
+    {
+        return shoppingListDAO.count();
     }
 }

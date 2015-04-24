@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.asomercado.view;
 
 import com.asomercado.control.ShoppingListController;
@@ -17,34 +12,37 @@ import java.util.Map;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
-import javax.faces.convert.FloatConverter;
-import org.jboss.weld.context.RequestContext;
 
 /**
- *
- * @author USUARIO1
+ * View class to interact with shopping lists
+ * @author Edgar Santos
  */
 @ManagedBean(name = "ShoppingListView")
 @SessionScoped
 public class ShoppingListView extends BaseView{
+    /*Controller injection*/
     @EJB
     private ShoppingListController shoppingListController;
     
     private ShoppingListDTO currentShoppingList;
     private List<ListItemDTO> currentListItems;
-    private Map<Integer, ListItemDTO> currentListItemsMap;
     private Map<Integer, MeasurementUnitDTO> measurementUnitsMap;
     private List<MeasurementUnitDTO> measurementUnitsList;
     private ListItemDTO currentListItem;
     private ListItemDTO currentListItemBeforeEdit;
     private boolean isCurrentListItemInEditMode = false;
-    final private FloatConverter floatConverter = new FloatConverter();
+    private int[] shoppingListPaginationRange;
+    private int currentPage;
+    private final int maxShoppingListPerPage = 8;
+    private List<Integer> shoppingListTablePages;
+    private List<ShoppingListDTO> shoppingLists;
+    private Integer shoppingListTablePagesCount;
     /**
      * Creates a new instance of NewJSFManagedBean
      */
     public ShoppingListView() {
-
+        shoppingListPaginationRange = new int[]{0, maxShoppingListPerPage-1};
+        currentPage = 1;
     }
     
     public String goCreateNewList()
@@ -144,11 +142,6 @@ public class ShoppingListView extends BaseView{
         currentListItem = null;
     }
     
-    public FloatConverter getFloatConverter()
-    {
-        return floatConverter;
-    }
-    
     public MeasurementUnitDTO getMeasurementUnitDTO(Integer pk)
     {
         return shoppingListController.getMeasurementUnit(pk);
@@ -196,10 +189,39 @@ public class ShoppingListView extends BaseView{
         }
         return searchResult;
     }
-    
+    public void refreshShoppingListTablePage(int page)
+    {
+        currentPage = page;
+        shoppingLists = null;
+        shoppingListTablePages = null;
+        shoppingListTablePagesCount = null;
+    }
     public List<ShoppingListDTO> getShoppingLists()
     {
-        return shoppingListController.getShoppingLists();
+        if(shoppingLists == null)
+        {
+            try
+            {
+                int totalPages = getShoppingListTablePagesCount();
+                if(currentPage > totalPages)
+                {
+                    currentPage = totalPages;
+                }
+                refreshShoppingListTablePagesList(totalPages);
+                shoppingListPaginationRange[0] = (currentPage - 1)* maxShoppingListPerPage;
+                shoppingListPaginationRange[1] = shoppingListPaginationRange[0] + maxShoppingListPerPage - 1;
+                shoppingLists = shoppingListController.getShoppingLists(shoppingListPaginationRange);
+            }
+            catch(Exception e)
+            {
+                //TODO Exception handling
+                e.printStackTrace();
+                return new ArrayList<ShoppingListDTO>();
+            }
+            
+        }
+        
+        return shoppingLists;
     }
     
     public void updateShoppingList()
@@ -224,6 +246,8 @@ public class ShoppingListView extends BaseView{
         {
             e.printStackTrace();
         }
+        
+        refreshShoppingListTablePage(getCurrentPage());
     }
     
     public void resetView()
@@ -231,13 +255,54 @@ public class ShoppingListView extends BaseView{
         currentListItem = null;
         currentListItemBeforeEdit = null;
         currentListItems = null;
-        currentListItemsMap = null;
         currentShoppingList = null;
+        refreshShoppingListTablePage(currentPage);
     }
     
     public String goToShoppingLists()
     {
         resetView();
+        refreshShoppingListTablePage(currentPage);
         return Routes.SHOW_SHOPPING_LIST;
     }
+    private Integer getShoppingListTablePagesCount() 
+    {
+        if(shoppingListTablePagesCount == null)
+        {
+            try
+            {
+                float totalCount = (float) shoppingListController.getShoppingListCount();  
+                return ((Double)Math.ceil(totalCount / maxShoppingListPerPage)).intValue(); 
+            }
+            catch(Exception e)
+            {
+                //TODO Exception handling
+                e.printStackTrace();
+                return 0;
+            }
+        }
+        return shoppingListTablePagesCount;
+        
+    }
+    private void refreshShoppingListTablePagesList(int pages)
+    {
+        shoppingListTablePages = new ArrayList<>();
+        for(int i = 1; i<=pages; i++)
+        {
+            shoppingListTablePages.add(i);
+        }
+    }
+
+    public List<Integer> getShoppingListTablePages() {
+        if(shoppingListTablePages == null)
+        {
+            refreshShoppingListTablePagesList(getShoppingListTablePagesCount());
+        }
+        return shoppingListTablePages;
+    }
+
+    public int getCurrentPage() {
+        return currentPage;
+    }      
+    
 }

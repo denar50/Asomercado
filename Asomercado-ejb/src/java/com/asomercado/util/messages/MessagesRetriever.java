@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.asomercado.util.messages;
 
 import java.util.Locale;
@@ -10,8 +5,8 @@ import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 
 /**
- *
- * @author denar
+ * Class that retrieves messages from the messages.properties file.
+ * @author Edgar Santos
  */
 public class MessagesRetriever{
     
@@ -19,17 +14,28 @@ public class MessagesRetriever{
     
     final private static String MESSAGES_FILE_PATH = "com.asomercado.util.messages.messages";
     
-    
+    /**
+     * Instantiates the message retriever based on a location for language support.
+     * @param locale 
+     */
     public MessagesRetriever(Locale locale)
     {
        resourceBundle = PropertyResourceBundle.getBundle(MESSAGES_FILE_PATH, locale);
     }
     
+    /**
+     * Constructor
+     */
     public MessagesRetriever()
     {
         resourceBundle = PropertyResourceBundle.getBundle(MESSAGES_FILE_PATH);
     }
     
+    /**
+     * 
+     * @param key
+     * @return the message that matches the key received as parameter.
+     */
     public String getMessage(String key)
     {
         return resourceBundle.getString(key);

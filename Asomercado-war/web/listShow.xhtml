@@ -55,6 +55,15 @@
                                 </h:column>
                             </h:dataTable>
                         </h:panelGroup>
+                        
+                        <h:panelGroup rendered="#{ShoppingListView.shoppingListTablePages.size() gt 1}" class="pagination-container" layout="block">
+                            <h:form>
+                                <p><h:outputText value="#{msg['list.show.pagination.heading.text']}" /></p>
+                                <c:forEach var="page" items="#{ShoppingListView.shoppingListTablePages}">
+                                    <h:commandButton value="#{page}" actionListener="#{ShoppingListView.refreshShoppingListTablePage(page)}"/>
+                                </c:forEach>
+                            </h:form>
+                        </h:panelGroup>
                     </h:form>
             </f:view>
 
